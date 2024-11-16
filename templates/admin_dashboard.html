@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_dashboard.css') }}">
+</head>
+<body>
+
+<div class="navbar">
+    <h1>Welcome, {{ username }}!</h1>
+    <p>Manage your blog and monitor performance metrics right here.</p>
+</div>
+
+<div class="container">
+    <div class="content">
+        <h2>Admin Dashboard</h2>
+        <p>Here you can manage your blog, monitor activity, and keep track of key statistics.</p>
+        <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+        
+        <div class="statistics">
+            <div class="stat-card">
+                <h3>120</h3>
+                <p>Total Posts</p>
+            </div>
+            <div class="stat-card">
+                <h3>98</h3>
+                <p>Active Users</p>
+            </div>
+            <div class="stat-card">
+                <h3>23</h3>
+                <p>Comments Pending</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <p>&copy; Build with Python Flask and Sqlite3</p>
+        <!-- 
+          QGFwcC5yb3V0ZSgnL2FkbWluX2Rhc2hib2FyZC9pc2V4aXN0cycsIG1ldGhvZHM9WydHRVQnXSkKZGVmIGlzX2V4aXN0cygpOgogICAgdXJsID0gcmVxdWVzdC5hcmdzLmdldCgndXJsJyk=
+        -->
+</div>
+
+</body>
+</html>

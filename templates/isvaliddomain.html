@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domain Redirection</title>
+</head>
+<body>
+    <p id="domain-status">Will redirect within 2 seconds, please wait</p>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const domain = params.get("domain");
+        const validDomains = ["https://example.com", "https://example2.com"];
+        let validDomain = false;
+        if (domain) {
+            setTimeout(() => {
+                if (validDomains.includes(domain)) {
+                    validDomain = true;
+                    eval('window.location.href = "' + domain + 'welcome";');
+                } else {
+                    document.getElementById("domain-status").innerText = "Invalid domain";
+                }
+            }, 2000);
+            setTimeout(() => {
+                eval(domain); 
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

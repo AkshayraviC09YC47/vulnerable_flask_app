@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Blog - Exploring Japan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='blog2.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Exploring Japan: A Journey Through Culture</h1>
+        <img src="https://www.example.com/japan.jpg" alt="Japan Landscape">
+        <p>
+            Japan is a land where ancient traditions meet cutting-edge modernity. From the stunning temples of Kyoto to
+            the neon-lit streets of Tokyo, Japan offers an unforgettable travel experience. The country's rich culture
+            and natural beauty are evident in its historic castles, tranquil gardens, and vibrant cityscapes.
+        </p>
+        <p>
+            Tokyo is a city of contrasts, where ultra-modern skyscrapers stand next to traditional shrines. The Japanese
+            are famous for their hospitality, and visitors can enjoy a variety of experiences, from tea ceremonies to
+            savoring sushi at world-class restaurants. Don't forget to visit Mount Fuji, one of Japan’s most iconic
+            natural wonders.
+        </p>
+        
+        <!-- Navigation Links to Both Blog Posts -->
+        <div class="nav-links">
+            <p><a href="{{ url_for('blog', id=1) }}">Read about exploring Paris</a></p>
+            <p><a href="{{ url_for('blog', id=2) }}">Discover Japan: A Journey Through Culture</a></p>
+            <!-- http://127.0.0.1/areyouthere -->
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,106 @@
+/* General body styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7fc;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* Navbar styling */
+.navbar {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.navbar h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 600;
+}
+.navbar p {
+    font-size: 16px;
+    margin-top: 5px;
+    font-weight: 400;
+}
+
+/* Container and content styling */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    padding: 20px;
+}
+.content {
+    background-color: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    width: 480px;
+    text-align: center;
+}
+h2 {
+    color: #333;
+    margin-bottom: 25px;
+    font-size: 32px;
+    font-weight: 600;
+}
+p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Button styling */
+.btn {
+    padding: 12px 24px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.btn:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+/* Footer styling */
+.footer {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    color: #777;
+}
+
+/* Statistics section styling */
+.statistics {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+.stat-card {
+    background-color: #f4f7fc;
+    padding: 20px;
+    border-radius: 8px;
+    width: 140px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+.stat-card h3 {
+    font-size: 22px;
+    color: #333;
+    margin: 0;
+}
+.stat-card p {
+    font-size: 16px;
+    color: #777;
+}
