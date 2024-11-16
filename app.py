@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
-jwt_secret = "secret"  # Secret key for JWT
+jwt_secret = "secret" 
 
 DATABASE = 'vulnerable_app.db'
 
