@@ -36,12 +36,31 @@
     </div>
 </div>
 
+<div class="container">
+    <h2>Comments</h2>
+    <div class="comments-section">
+        {% for comment in comments %}
+            <div class="comment">
+                <strong>{{ comment[0] }}</strong>: {{ comment[1] }}
+            </div>
+        {% endfor %}
+    </div>
+    <div class="add-comment">
+        <h3>Post a Comment</h3>
+        <form id="commentForm">
+            <input type="text" id="commentText" placeholder="Enter your comment">
+            <button type="button" onclick="postComment()">Submit</button>
+        </form>
+    </div>
+</div>
+
 <div class="footer">
     <p>&copy; Build with Python Flask and Sqlite3</p>
         <!-- 
           QGFwcC5yb3V0ZSgnL2FkbWluX2Rhc2hib2FyZC9pc2V4aXN0cycsIG1ldGhvZHM9WydHRVQnXSkKZGVmIGlzX2V4aXN0cygpOgogICAgdXJsID0gcmVxdWVzdC5hcmdzLmdldCgndXJsJyk=
         -->
 </div>
+<a href="http://192.168.1.25:5002/upgrade?status=pending"></a></p>
 
 </body>
 </html>

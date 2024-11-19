@@ -1,12 +1,14 @@
-import sqlite3
-import requests, os, subprocess, jwt
+import requests, os, subprocess, jwt,threading,http.server,urllib.parse,sqlite3
 from flask import Flask, request, jsonify, redirect, render_template, url_for, session, g, make_response
 from datetime import datetime, timedelta
+
+main_ip_address="192.168.1.25"
+second_server_port=5002
+main_server_port=5001
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
 jwt_secret = "secret" 
-
 DATABASE = 'vulnerable_app.db'
 
 def get_db():
@@ -50,19 +52,14 @@ def login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        
         query = f"SELECT * FROM users WHERE username = '{username}'"
         db = get_db()
         cursor = db.cursor()
         cursor.execute(query)
         user = cursor.fetchone()
-        
         if user:
             if user[1] == password:
-                # Generate JWT token
                 token = jwt.encode({"username": username}, jwt_secret, algorithm="HS256")
-                
-                # Set JWT as a cookie and redirect to admin_dashboard
                 response = make_response(redirect(url_for('admin_dashboard')))
                 response.set_cookie('jwt', token)
                 return response
@@ -70,7 +67,6 @@ def login():
                 return render_template('login.html', error=f"Wrong password for user {username}")
         else:
             return render_template('login.html', error=f"User {username} is not a valid user")
-    
     return render_template('login.html', error=None)
 
 def verify_jwt(token):
@@ -88,31 +84,21 @@ def admin_dashboard():
         if decoded_token:
             username = decoded_token["username"]
             return render_template('admin_dashboard.html', username=username)
-    return redirect(url_for('login'))
+    response = make_response(redirect(url_for('login')))
+    response.headers['X-Site-Status'] = f'http://{main_ip_address}:{second_server_port}/upgrade?status=pending'
+    return response
 
 @app.route('/logout')
 def logout():
-    # Remove the JWT token from the cookies
     response = make_response(redirect(url_for('home')))
-    response.set_cookie('jwt', '', expires=0)  # Clear the JWT cookie
-    
-    # Get the 'redirect' parameter from the query string
+    response.set_cookie('jwt', '', expires=0) 
     redirect_url = request.args.get('redirect')
-
-    # Check if a redirect URL is provided
     if redirect_url:
-        # Vulnerable open redirect: directly redirect to the provided URL
-        response = make_response(redirect(redirect_url))  # Redirect to the user-supplied URL
+        response = make_response(redirect(redirect_url))  
     else:
-        # Default to home page if no redirect URL is provided
         response = make_response(redirect(url_for('home')))
-
-    # Add custom header with hardcoded URL
     response.headers['X-Custom-Redirect-Path'] = 'redirect= + url'
-    
-    # Return the response object with the custom header
     return response
-
 
 @app.route('/admin_dashboard/isexists', methods=['GET'])
 def is_exists():
@@ -130,8 +116,30 @@ def is_exists():
 def valid_domain():
     return render_template('isvaliddomain.html')
 
+def run_vulnerable_server():
+    class VulnerableHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
+        def do_GET(self):
+            parsed_path = urllib.parse.urlparse(self.path)
+            query_params = urllib.parse.parse_qs(parsed_path.query)
+            status = query_params.get('status', [''])[0]
+            self.send_response(200)
+            self.send_header('Set-Cookie', f"status={status}")
+            self.end_headers()
+            self.wfile.write(b"This page is currently under development and will be available soon.")
+
+        def log_message(self, format, *args):
+            return 
+
+    server_address = (main_ip_address, second_server_port)
+    httpd = http.server.HTTPServer(server_address, VulnerableHTTPRequestHandler)
+    print(f" * Vulnerable server running on http://{server_address[0]}:{server_address[1]}")
+    httpd.serve_forever()
+
+vulnerable_server_thread = threading.Thread(target=run_vulnerable_server)
+vulnerable_server_thread.daemon = True 
+vulnerable_server_thread.start()
 
 if __name__ == '__main__':
     init_db()
-    app.run(debug=False, port=5001)
+    app.run(debug=False, port=main_server_port,host=main_ip_address)
 
